@@ -10,6 +10,7 @@ namespace AoC2022
         {
 
         }
+
         public static List<string> ParseFile(string path)
         {
             StreamReader sr = new StreamReader(@"..\..\..\"+path);

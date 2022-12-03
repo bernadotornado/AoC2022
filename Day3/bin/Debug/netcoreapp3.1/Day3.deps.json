@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Day3/1.0.0": {
+        "dependencies": {
+          "AoC2022": "1.0.0"
+        },
+        "runtime": {
+          "Day3.dll": {}
+        }
+      },
+      "AoC2022/1.0.0": {
+        "runtime": {
+          "AoC2022.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Day3/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AoC2022/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

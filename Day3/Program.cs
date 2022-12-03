@@ -37,18 +37,13 @@ namespace Day3
                 char common = GetCommonChar(firstCompartment, secondCompartment);
                 score[0] += EvaluateChar(common);
 
-                Console.WriteLine($"rucksack: {rucksack} + {rucksack.Length}\n" +
-                    $"firstCompartment: {firstCompartment} + {firstCompartment.Length}\n" +
-                    $"secondCompartment: {secondCompartment} + {secondCompartment.Length}\n" +
-                    $"common: {common}\n" +
-                    $"score: {EvaluateChar(common)}\n" +
-                    $"total: {score[0]} + {score[1]}");
-
                 if (count % 3 == 0)
                     score[1] += EvaluateChar(GetCommonChar(new string[] { lines[count], lines[count + 1], lines[count + 2] }));
                 
                 count++;
             }
+            Console.WriteLine($"Part 1 Score: {score[0]}\n" +
+                              $"Part 2 Score: {score[1]}\n");
         }
     }
 }

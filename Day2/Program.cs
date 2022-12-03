@@ -29,26 +29,11 @@ namespace Day2
                 answerPaper => onPaper + paperReward,
                 answerScissors => onScissors + scissorsReward
             };
-        static int GetMatchingAnswer(char prompt, int answer) => prompt switch
+        static int GetMatchingAnswer(int answer, int win, int lose, int draw) => answer switch
         {
-            promptRock => answer switch
-            {
-                answerWin => paperReward + winReward,
-                answerLose => scissorsReward + loseReward,
-                answerDraw => rockReward + drawReward,
-            },
-            promptPaper => answer switch
-            {
-                answerWin => scissorsReward + winReward,
-                answerLose => rockReward + loseReward,
-                answerDraw => paperReward + drawReward,
-            },
-            promptScissors => answer switch
-            {
-                answerWin => rockReward + winReward,
-                answerLose => paperReward + loseReward,
-                answerDraw => scissorsReward + drawReward,
-            }
+            answerWin => win + winReward,
+            answerLose => lose + loseReward,
+            answerDraw => draw + drawReward,
         };
         
         
@@ -65,10 +50,15 @@ namespace Day2
                     promptPaper => GetScore(answer, loseReward, drawReward, winReward),
                     promptScissors => GetScore(answer, winReward, loseReward, drawReward)
                 };
-                score[1] += GetMatchingAnswer(prompt, answer);
+                score[1] += prompt switch
+                {
+                    promptRock => GetMatchingAnswer(answer, paperReward, scissorsReward, rockReward),
+                    promptPaper => GetMatchingAnswer(answer, scissorsReward, rockReward, paperReward),
+                    promptScissors => GetMatchingAnswer(answer, rockReward, paperReward, scissorsReward),
+                };
             }
-            Console.WriteLine($"score: {score[0]}\n" +
-                $"score: {score[1]}\n");
+            Console.WriteLine($"Part 1 Score: {score[0]}\n" +
+                              $"Part 2 Score: {score[1]}\n");
         }
     }
 }

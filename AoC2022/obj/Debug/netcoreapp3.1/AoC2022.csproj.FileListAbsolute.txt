@@ -1,0 +1,14 @@
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.csproj.AssemblyReference.cache
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.AssemblyInfoInputs.cache
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.AssemblyInfo.cs
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.csproj.CoreCompileInputs.cache
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.exe
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.deps.json
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.runtimeconfig.json
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.runtimeconfig.dev.json
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.dll
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\bin\Debug\netcoreapp3.1\AoC2022.pdb
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.dll
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.pdb
+C:\Users\bszha\Spengergasse\AoC2022\AoC2022\AoC2022\obj\Debug\netcoreapp3.1\AoC2022.genruntimeconfig.cache

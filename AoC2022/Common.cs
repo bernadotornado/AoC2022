@@ -8,7 +8,7 @@ namespace AoC2022
    {
         static void Main(string[] args)
         {
-
+            
         }
 
         public static List<string> ParseFile(string path)

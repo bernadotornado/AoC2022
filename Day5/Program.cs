@@ -15,32 +15,13 @@ namespace Day5
             var lines = Common.ParseFile(@"input.txt");
 
 
-            for (int i = 0; i < 8; i++)
-            {
-                char[] c = lines[i].ToCharArray();
-                //foreach (var item in c)
-                //{
-                //    if(item != ' ' && item != '[' && item != ']')
-                //    {
-                //        Console.WriteLine(item);
-                //    }
-                //}
-                for (int j = 1; j < lines[i].Length; j+=4)
-                {
-                    Console.WriteLine(lines[i][j]);
+            int headerLength = 8;
+            for (int i = 0; i < headerLength; i++)
+                for (int j = 1, index = 0; j < lines[i].Length; j+=4, index++)
                     if (lines[i][j] != ' ')
-                    {
-                        vs[j].Push(lines[i][j]);
-                    }
-                }
-            }
-            //var stackAmount = from line in lines
-            //                  where line.Trim().ToCharArray()[0] == 1
-            //                  select line;
-            //Console.WriteLine(stackAmount.FirstOrDefault());
-
-
-            
+                        vs[index].Push(lines[i][j]);
+                
+            Console.WriteLine(lines);
         }
     }
 }

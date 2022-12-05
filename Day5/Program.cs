@@ -37,19 +37,18 @@ namespace Day5
                     int from = int.Parse(a[3]) - 1;
                     
                     List<Char> grabbed = new List<char>();
-                        for (int j = 0; j < int.Parse(a[1]); j++)
-                        {
-                            char c = stacks[from].Pop();
-                            if (grabOneByOne)
-                                stacks[to].Push(c);
-                            else
-                                grabbed.Add(c);
-                        }
+                    for (int j = 0; j < int.Parse(a[1]); j++)
+                    {
+                        char c = stacks[from].Pop();
+                        if (grabOneByOne)
+                            stacks[to].Push(c);
+                        else
+                            grabbed.Add(c);
+                    }
 
                     if (!grabOneByOne)
                         for (int j = grabbed.Count - 1; j >= 0; j--)
                             stacks[to].Push(grabbed[j]);
-
                 }
                 return stacks;
             }

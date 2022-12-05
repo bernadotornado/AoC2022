@@ -10,13 +10,12 @@ namespace Day5
     {
         static void Main(string[] args)
         {
-            bool grabOneByOne = false;
             int amountOfStacks = 9;
             int headerLength = 8;
 
 
             //Run Instructions
-            List<Stack<Char>> RunInstructions(bool grabbingMethod)
+            List<Stack<Char>> RunInstructions(bool grabOneByOne)
             {
                 List<Stack<Char>> stacks = new List<Stack<char>>();
                 var lines = Common.ParseFile(@"input.txt");
@@ -34,33 +33,24 @@ namespace Day5
                 for (int i = headerLength + 2; i < lines.Count; i++)
                 {
                     var a = lines[i].Split(" ");
-
-                    if (grabbingMethod)
+                    int to = int.Parse(a[5]) - 1;
+                    int from = int.Parse(a[3]) - 1;
+                    
+                    List<Char> grabbed = new List<char>();
                         for (int j = 0; j < int.Parse(a[1]); j++)
                         {
-                            int from = int.Parse(a[3]) - 1;
-                            int to = int.Parse(a[5]) - 1;
-                            stacks[to].Push(stacks[from].Pop());
-                        }
-                    else
-                    {
-                        List<Char> grabbed = new List<char>();
-                        int to = int.Parse(a[5]) - 1;
-                        int from = int.Parse(a[3]) - 1;
-                        for (int j = 0; j < int.Parse(a[1]); j++)
-                        {
-
-                            grabbed.Add(stacks[from].Pop());
-
+                            char c = stacks[from].Pop();
+                            if (grabOneByOne)
+                                stacks[to].Push(c);
+                            else
+                                grabbed.Add(c);
                         }
 
+                    if (!grabOneByOne)
                         for (int j = grabbed.Count - 1; j >= 0; j--)
-                        {
                             stacks[to].Push(grabbed[j]);
-                        }
-                    }
-                }
 
+                }
                 return stacks;
             }
 

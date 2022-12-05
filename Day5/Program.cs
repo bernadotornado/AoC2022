@@ -9,19 +9,33 @@ namespace Day5
     {
         static void Main(string[] args)
         {
-            List<Stack<Char>> vs = new List<Stack<char>>();
-            for (int i = 0; i < 9; i++)
-                vs.Add(new Stack<char>());
-            var lines = Common.ParseFile(@"input.txt");
-
-
+            int amountOfStacks = 9;
             int headerLength = 8;
-            for (int i = 0; i < headerLength; i++)
-                for (int j = 1, index = 0; j < lines[i].Length; j+=4, index++)
-                    if (lines[i][j] != ' ')
-                        vs[index].Push(lines[i][j]);
-                
-            Console.WriteLine(lines);
+            List<Stack<Char>> stacks = new List<Stack<char>>();
+            var lines = Common.ParseFile(@"input.txt");
+            for (int i = 0; i < amountOfStacks; i++)
+                stacks.Add(new Stack<char>());
+            
+            //Fill Stacks
+            for (int row = headerLength-1; row >= 0; row--)
+                for (int posOfCharInString = 1, index = 0; posOfCharInString < lines[row].Length; posOfCharInString+=4, index++)
+                    if (lines[row][posOfCharInString] != ' ') 
+                        stacks[index].Push(lines[row][posOfCharInString]);
+
+            //Run Intstructions
+            for (int i = headerLength+2; i < lines.Count; i++)
+            {
+                var a = lines[i].Split(" ");
+               
+                 for (int j = 0; j < int.Parse(a[1]); j++)
+                 {
+                      int from = int.Parse(a[3])-1;
+                      int to = int.Parse(a[5])-1;
+                      stacks[to].Push(stacks[from].Pop());
+                 }
+            }
+            foreach (var stack in stacks)
+                Console.Write(stack.Peek());
         }
     }
 }

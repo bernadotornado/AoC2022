@@ -95,10 +95,7 @@ namespace Day7
     {
         static void Main()
         {
-            var lines = Common.ParseFile("input.txt");
-            // List<string> commands = new List<string>();
-            // List<string> dirs = new List<string>();
-            // List<string> files = new List<string>();
+            var lines = Common.ParseFile("test.txt");
             
             Directory root = new Directory("/", 0);
             Directory currentDirectory = root;
@@ -112,7 +109,6 @@ namespace Day7
                         switch (args[1])
                         {
                             case "cd":
-              //                  Console.WriteLine("selected Dir: " + args[2]);
               
                                 if (args[2] != "/" && args[2] != "..") 
                                 {
@@ -129,7 +125,6 @@ namespace Day7
                                 }
                                 break;
                             case "ls":
-                        //        Console.WriteLine("ls");
                                 break;
                             default:
                                 break;
@@ -137,12 +132,10 @@ namespace Day7
 
                         break;
                     case "dir":
-                     //   dirs.Add(item);
                         break;
                         
                     default:
                         File f = new File(args[1], int.Parse(args[0]));
-                     //   Console.WriteLine($"File: {f.name}, Size: {f.fileSize}");
                         currentDirectory.filesInDirectory.Add(f);
                         break;
                 }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using AoC2022;
+using Microsoft.Win32.SafeHandles;
 
 namespace Day7
 {
@@ -93,15 +96,76 @@ namespace Day7
 
     class Program
     {
+        static int AmountOfSmallDirectories(Directory root)
+        {
+            int x = 0;
+            
+            if(root.subDirectories != null)
+                foreach (var dir in root.subDirectories)
+                {
+                    if (dir.totalSize <= 100_000)
+                    {
+                        x += dir.totalSize;
+                    }
+                    
+                }
+            if(root.subDirectories != null)
+                foreach (var dir in root.subDirectories)
+                {
+                    if (dir.totalSize > 100_000)
+                    {
+                        x += AmountOfSmallDirectories(dir);
+                    }
+                    
+                }
+
+            return x;
+
+        }
+
+        static List<Directory> GetSmallSubDirectories(Directory directory)
+        {
+            List<Directory> list = new List<Directory>();
+            foreach (var dir in directory.subDirectories)
+            {
+                if (dir.totalSize <= 100000)
+                {
+                    list.Add(dir);
+                }
+            }
+            return list;
+        }
+        
+        
         static void Main()
         {
             var lines = Common.ParseFile("test.txt");
             
             Directory root = new Directory("/", 0);
             Directory currentDirectory = root;
+            ParseUNIXCommands(lines, currentDirectory);
+            
+            root.PrintDir();
+            root.CountDirSize();
+            
+            Console.WriteLine($"\nTotalSize: {root.CountTotalSize()}");
+            int x = 0;
+            var directories=  GetSmallSubDirectories(root);
+            foreach (var dir in directories)
+            {
+
+                x += dir.totalSize;
+            }
+
+           
+            Console.WriteLine($"\nPart 1 Score: {x}");
+            Console.WriteLine(lines);
+        }
+
+        private static void ParseUNIXCommands(List<string> lines, Directory currentDirectory)
+        {
             foreach (var item in lines)
             {
-            
                 var args = item.Split(" ");
                 switch (args[0])
                 {
@@ -109,10 +173,10 @@ namespace Day7
                         switch (args[1])
                         {
                             case "cd":
-              
-                                if (args[2] != "/" && args[2] != "..") 
+
+                                if (args[2] != "/" && args[2] != "..")
                                 {
-                                    var nextDir = new Directory(args[2], currentDirectory.depth+1);
+                                    var nextDir = new Directory(args[2], currentDirectory.depth + 1);
                                     currentDirectory.subDirectories.Add(nextDir);
                                     nextDir.parent = currentDirectory;
                                     currentDirectory = nextDir;
@@ -123,6 +187,7 @@ namespace Day7
                                     var prevDir = currentDirectory.parent;
                                     currentDirectory = prevDir;
                                 }
+
                                 break;
                             case "ls":
                                 break;
@@ -133,23 +198,13 @@ namespace Day7
                         break;
                     case "dir":
                         break;
-                        
+
                     default:
                         File f = new File(args[1], int.Parse(args[0]));
                         currentDirectory.filesInDirectory.Add(f);
                         break;
                 }
             }
-            
-            root.PrintDir();
-            root.CountDirSize();
-            Console.WriteLine($"\nTotalSize: {root.CountTotalSize()}");
-            Console.WriteLine(lines);
-            
-            
-            
-            
-            
         }
     }
 }

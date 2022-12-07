@@ -24,6 +24,22 @@ namespace Day7
         public int depth;
         public int dirSize = 0;
         public int totalSize = 0;
+
+        // public int TotalSize
+        // {
+        //     get
+        //     {
+        //         int temp = 0;
+        //         foreach (var dir in this.subDirectories)
+        //         {
+        //             temp += dir.totalSize;
+        //         }
+        //
+        //         temp += this.dirSize;
+        //        // totalSize = temp;
+        //         return temp;
+        //     }
+        // }
         public List<File> filesInDirectory = new List<File>();
         public List<Directory> subDirectories = new List<Directory>();
         public Directory parent;
@@ -50,6 +66,11 @@ namespace Day7
             {
                 dirSize += file.fileSize;
             }
+
+            foreach (var dir in subDirectories)
+            {
+                dir.CountDirSize();
+            }
         }
         
         public void PrintDir (){
@@ -57,7 +78,7 @@ namespace Day7
             {
                 Console.Write("\t");
             }
-            Console.Write($"Listing Dir: {name}");
+            Console.Write($"Listing Dir: {name}+ TotalSize: {totalSize}");
             Console.WriteLine();
 
             
@@ -82,7 +103,8 @@ namespace Day7
                     {
                         Console.Write("\t");
                     }
-                        dir.CountDirSize();
+                        if(dir.dirSize ==0)
+                            dir.CountDirSize();
                         Console.Write($"Dir: {dir.name}, Size: {dir.dirSize}, Depth: {dir.depth}");
                         Console.WriteLine();
                         dir.PrintDir();
@@ -125,21 +147,26 @@ namespace Day7
 
         static List<Directory> GetSmallSubDirectories(Directory directory)
         {
-            List<Directory> list = new List<Directory>();
-            foreach (var dir in directory.subDirectories)
+            void NewFunction(List<Directory> directories, Directory _dir)
             {
-                if (dir.totalSize <= 100000)
+                foreach (var dir in _dir.subDirectories)
                 {
-                    list.Add(dir);
+                    if (dir.totalSize <= 100000)
+                    {
+                        directories.Add(dir);
+                    }
                 }
             }
+
+            List<Directory> list = new List<Directory>();
+            NewFunction(list, directory);
             return list;
         }
         
         
         static void Main()
         {
-            var lines = Common.ParseFile("test.txt");
+            var lines = Common.ParseFile("input.txt");
             
             Directory root = new Directory("/", 0);
             Directory currentDirectory = root;
@@ -151,11 +178,11 @@ namespace Day7
             Console.WriteLine($"\nTotalSize: {root.CountTotalSize()}");
             int x = 0;
             var directories=  GetSmallSubDirectories(root);
-            foreach (var dir in directories)
-            {
-
-                x += dir.totalSize;
-            }
+            // foreach (var dir in directories)
+            // {
+            //
+            //     x += dir.TotalSize;
+            // }
 
            
             Console.WriteLine($"\nPart 1 Score: {x}");

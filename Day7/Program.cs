@@ -22,24 +22,30 @@ namespace Day7
     {
         public string name;
         public int depth;
-        public int dirSize = 0;
-        public int totalSize = 0;
+        private int dirSize = -1;
+        private int totalSize = -1;
 
-        // public int TotalSize
-        // {
-        //     get
-        //     {
-        //         int temp = 0;
-        //         foreach (var dir in this.subDirectories)
-        //         {
-        //             temp += dir.totalSize;
-        //         }
-        //
-        //         temp += this.dirSize;
-        //        // totalSize = temp;
-        //         return temp;
-        //     }
-        // }
+        public int DirSize { get {
+                if (dirSize > -1)
+                    return dirSize;
+                int temp = 0;
+                foreach (var file in filesInDirectory)
+                    temp += file.fileSize;
+                dirSize = temp;
+                return temp;
+            }
+        }
+         public int TotalSize { get {
+                 if (totalSize > -1)
+                     return totalSize;
+                 int temp = 0;
+                 foreach (var dir in this.subDirectories)
+                     temp += dir.TotalSize;
+                 temp += this.DirSize;
+                 totalSize = temp;
+                 return temp;
+             }
+         }
         public List<File> filesInDirectory = new List<File>();
         public List<Directory> subDirectories = new List<Directory>();
         public Directory parent;
@@ -48,148 +54,51 @@ namespace Day7
             this.name = name;
             this.depth = depth;
         }
-
-        public int CountTotalSize()
+        public void PrintDir ()
         {
-            int x = 0;
-            foreach (var dir in subDirectories)
-            {
-                x += dir.CountTotalSize();
-            }
-
-            totalSize = dirSize + x;
-            return totalSize;
-        }
-        public void CountDirSize()
-        {
+            Console.Write(name == "/" ? $"Dir: Root, TotalSize: {TotalSize}, Depth: {depth}\n":"");
             foreach (var file in filesInDirectory)
             {
-                dirSize += file.fileSize;
+                for (int i = 0; i <= depth; i++)
+                    Console.Write("\t");
+                Console.Write($"File: {file.name}, Size: {file.fileSize}");
+                Console.WriteLine();
             }
-
             foreach (var dir in subDirectories)
             {
-                dir.CountDirSize();
-            }
-        }
-        
-        public void PrintDir (){
-            for (int i = 0; i < depth; i++)
-            {
-                Console.Write("\t");
-            }
-            Console.Write($"Listing Dir: {name}+ TotalSize: {totalSize}");
-            Console.WriteLine();
-
-            
-            if (filesInDirectory != null)
-            {
-                foreach (var file in filesInDirectory)
-                {
-                    for (int i = 0; i < depth; i++)
-                    {
-                        Console.Write("\t");
-                    }
-                    Console.Write($"File: {file.name}, Size: {file.fileSize}");
-                    Console.WriteLine();
-                }
-            }
-
-            if (subDirectories != null)
-            {
-                foreach (var dir in subDirectories)
-                {
-                    for (int i = 0; i < depth; i++)
-                    {
-                        Console.Write("\t");
-                    }
-                        if(dir.dirSize ==0)
-                            dir.CountDirSize();
-                        Console.Write($"Dir: {dir.name}, Size: {dir.dirSize}, Depth: {dir.depth}");
-                        Console.WriteLine();
-                        dir.PrintDir();
-                }
+                for (int i = 0; i <= depth; i++)
+                    Console.Write("\t");
+                Console.Write($"Dir: {dir.name}, Size: {dir.DirSize}, TotalSize: {dir.TotalSize}, Depth: {dir.depth}");
+                Console.WriteLine();
+                dir.PrintDir(); 
             }
         }
     }
 
-    
-    
-
     class Program
     {
-        static int AmountOfSmallDirectories(Directory root)
-        {
-            int x = 0;
-            
-            if(root.subDirectories != null)
-                foreach (var dir in root.subDirectories)
-                {
-                    if (dir.totalSize <= 100_000)
-                    {
-                        x += dir.totalSize;
-                    }
-                    
-                }
-            if(root.subDirectories != null)
-                foreach (var dir in root.subDirectories)
-                {
-                    if (dir.totalSize > 100_000)
-                    {
-                        x += AmountOfSmallDirectories(dir);
-                    }
-                    
-                }
-
-            return x;
-
-        }
-
-        static List<Directory> GetSmallSubDirectories(Directory directory)
-        {
-            void NewFunction(List<Directory> directories, Directory _dir)
-            {
-                foreach (var dir in _dir.subDirectories)
-                {
-                    if (dir.totalSize <= 100000)
-                    {
-                        directories.Add(dir);
-                    }
-                }
-            }
-
-            List<Directory> list = new List<Directory>();
-            NewFunction(list, directory);
-            return list;
-        }
-        
-        
         static void Main()
         {
             var lines = Common.ParseFile("input.txt");
             
             Directory root = new Directory("/", 0);
             Directory currentDirectory = root;
-            ParseUNIXCommands(lines, currentDirectory);
-            
+            ParseUNIXCommands(lines, currentDirectory, root);
             root.PrintDir();
-            root.CountDirSize();
-            
-            Console.WriteLine($"\nTotalSize: {root.CountTotalSize()}");
-            int x = 0;
-            var directories=  GetSmallSubDirectories(root);
-            // foreach (var dir in directories)
-            // {
-            //
-            //     x += dir.TotalSize;
-            // }
 
-           
-            Console.WriteLine($"\nPart 1 Score: {x}");
-            Console.WriteLine(lines);
+            Console.WriteLine($"\nPart 1 Score: {GetTotalSizeOfSmallDirs(root)}");
+        }
+       static int GetTotalSizeOfSmallDirs(Directory dir)
+        {
+            int x = 0;
+            if (dir.TotalSize < 100_000)
+                x = dir.TotalSize;
+            foreach(var child in dir.subDirectories)
+                x += GetTotalSizeOfSmallDirs(child);
+            return x;
         }
 
-        private static void ParseUNIXCommands(List<string> lines, Directory currentDirectory)
+        private static void ParseUNIXCommands(List<string> lines, Directory currentDirectory, Directory root)
         {
             foreach (var item in lines)
             {
@@ -200,21 +109,23 @@ namespace Day7
                         switch (args[1])
                         {
                             case "cd":
-
-                                if (args[2] != "/" && args[2] != "..")
+                                switch (args[2])
                                 {
-                                    var nextDir = new Directory(args[2], currentDirectory.depth + 1);
-                                    currentDirectory.subDirectories.Add(nextDir);
-                                    nextDir.parent = currentDirectory;
-                                    currentDirectory = nextDir;
+                                    case "/":
+                                        currentDirectory = root;
+                                        break;
+                                    case "..":
+                                        var prevDir = currentDirectory.parent;
+                                        currentDirectory = prevDir;
+                                        break;
+                                    default:
+                                        var nextDir = new Directory(args[2], currentDirectory.depth + 1);
+                                        currentDirectory.subDirectories.Add(nextDir);
+                                        nextDir.parent = currentDirectory;
+                                        currentDirectory = nextDir;
+                                        break;
+                                        
                                 }
-
-                                if (args[2] == "..")
-                                {
-                                    var prevDir = currentDirectory.parent;
-                                    currentDirectory = prevDir;
-                                }
-
                                 break;
                             case "ls":
                                 break;

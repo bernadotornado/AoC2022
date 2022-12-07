@@ -20,6 +20,7 @@ namespace Day7
     }
     public class Directory
     {
+        public const int fileSystemSize = 70_000_000;
         public string name;
         public int depth;
         private int dirSize = -1;
@@ -73,75 +74,80 @@ namespace Day7
                 dir.PrintDir(); 
             }
         }
+        public static int GetDirectoryToDelete(Directory root, int unusedSpaceNeeded)
+        {
+            int diff = -1 *(Directory.fileSystemSize - unusedSpaceNeeded - root.TotalSize);
+            var dirs = new List<int>();
+
+            void SearchFileSystem(Directory directory)
+            {
+                foreach (var dir in directory.subDirectories)
+                {
+                    if (dir.TotalSize >= diff)
+                        dirs.Add(dir.TotalSize);
+                    SearchFileSystem(dir);
+                }
+                
+            }
+            SearchFileSystem(root);
+            dirs.Sort();
+            return dirs[0];
+        }
+        
+        public static int GetTotalSizeOfSmallDirectories(Directory dir)
+        {
+            int x = 0;
+            if (dir.TotalSize < 100_000)
+                x = dir.TotalSize;
+            foreach(var child in dir.subDirectories)
+                x += GetTotalSizeOfSmallDirectories(child);
+            return x;
+        }
+
     }
 
     class Program
     {
         static void Main()
         {
+            int updateSize = 30_000_000;
             var lines = Common.ParseFile("input.txt");
             
             Directory root = new Directory("/", 0);
             Directory currentDirectory = root;
             ParseUNIXCommands(lines, currentDirectory, root);
-            root.PrintDir();
+            //root.PrintDir();
 
-            Console.WriteLine($"\nPart 1 Score: {GetTotalSizeOfSmallDirs(root)}");
+            Console.WriteLine($"Part 1 Score: {Directory.GetTotalSizeOfSmallDirectories(root)}\n" +
+                              $"Part 2 Score: {Directory.GetDirectoryToDelete(root, updateSize)}");
         }
-       static int GetTotalSizeOfSmallDirs(Directory dir)
-        {
-            int x = 0;
-            if (dir.TotalSize < 100_000)
-                x = dir.TotalSize;
-            foreach(var child in dir.subDirectories)
-                x += GetTotalSizeOfSmallDirs(child);
-            return x;
-        }
-
         private static void ParseUNIXCommands(List<string> lines, Directory currentDirectory, Directory root)
         {
             foreach (var item in lines)
             {
-                var args = item.Split(" ");
-                switch (args[0])
-                {
-                    case "$":
-                        switch (args[1])
-                        {
-                            case "cd":
-                                switch (args[2])
-                                {
-                                    case "/":
-                                        currentDirectory = root;
-                                        break;
-                                    case "..":
-                                        var prevDir = currentDirectory.parent;
-                                        currentDirectory = prevDir;
-                                        break;
-                                    default:
-                                        var nextDir = new Directory(args[2], currentDirectory.depth + 1);
-                                        currentDirectory.subDirectories.Add(nextDir);
-                                        nextDir.parent = currentDirectory;
-                                        currentDirectory = nextDir;
-                                        break;
-                                        
-                                }
-                                break;
-                            case "ls":
-                                break;
-                            default:
-                                break;
-                        }
-
-                        break;
-                    case "dir":
-                        break;
-
-                    default:
-                        File f = new File(args[1], int.Parse(args[0]));
-                        currentDirectory.filesInDirectory.Add(f);
-                        break;
-                }
+                 var args = item.Split(" ");
+                 if (args[0] != "$" && args[0] != "dir")
+                 {
+                     File f = new File(args[1], int.Parse(args[0]));
+                     currentDirectory.filesInDirectory.Add(f);
+                 }
+                 else if (args[1] == "cd")
+                    switch (args[2])
+                    {
+                        case "/":
+                            currentDirectory = root;
+                            break;
+                        case "..":
+                            var prevDir = currentDirectory.parent;
+                            currentDirectory = prevDir;
+                            break;
+                        default:
+                            var nextDir = new Directory(args[2], currentDirectory.depth + 1);
+                            currentDirectory.subDirectories.Add(nextDir);
+                            nextDir.parent = currentDirectory;
+                            currentDirectory = nextDir;
+                            break;
+                    }
             }
         }
     }

@@ -30,7 +30,6 @@ namespace Day3
             int count = 0;
             foreach (string rucksack in lines)
             {
-                
                 int compartmentSize = rucksack.Length / 2;
                 var firstCompartment = rucksack.Substring(0, compartmentSize);
                 var secondCompartment = rucksack.Substring(compartmentSize);

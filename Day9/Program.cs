@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 using AoC2022;
 
 namespace Day9
@@ -33,49 +34,50 @@ namespace Day9
                 }
             }
             public void Update(string line, List<Pos> visited)
-            {
+            {   
                 
-                    var a = line.Split(" ");
-                    for (int i = 0; i < int.Parse(a[1]); i++)
-                    {
-                        last = pos;
-                        if (head == this)
-                        {
-                            switch (a[0])
-                            {
-                                case "R":
-                                    pos.x++; break;
-                                case "L": 
-                                    pos.x--; break;
-                                case "U":
-                                    pos.y++; break;
-                                case "D":
-                                    pos.y--; break;
-                            }
-                        }
-                        if(parent != null)
-                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
-                            {
-                                
-                                pos = parent.last;
-                            }
-
-                        if (this == tail && !visited.Contains(pos))
-                        {
-                            visited.Add(tail.pos);
-                        }
-                        
-                        if (next != null )
-                            next.Update(line, visited);
-                    }
+                var a = line.Split(" ");
+                
+                for (int i = 0; i < int.Parse(a[1]); i++)
+                {
                     iter++;
-                  
-                
+                    last = pos;
+                    if (this == head)
+                    {
+                        switch (a[0])
+                        {
+                            case "R":
+                                pos.x++; break;
+                            case "L": 
+                                pos.x--; break;
+                            case "U":
+                                pos.y++; break;
+                            case "D":
+                                pos.y--; break;
+                        }
+                        next.Update(line,visited);
+                    }
 
-                
+                    else if (this == tail)
+                    {
+                        if (!visited.Contains(pos))
+                        {
+                            visited.Add(pos);
+                        }
+                      //  break;
+                        
+                    }
+                    else
+                    {
+                        if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
+                        {
+                            pos = parent.last;
+                        }
+                      // next.Update(line,visited);
+                    }
+                    
+                }
             }
-            
-            
         }
         struct Pos
         {
@@ -91,9 +93,9 @@ namespace Day9
         {
 
             
-            var lines = Common.ParseFile(@"test2.txt");
+            var lines = Common.ParseFile(@"input.txt");
             Console.WriteLine("Lines: "+lines.Count);
-            Knot _head = new Knot(true, 10);
+            Knot _head = new Knot(true, 2);
             
             List<Pos> visited = new List<Pos>();
             int lin = 0;

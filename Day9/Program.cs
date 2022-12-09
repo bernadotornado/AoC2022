@@ -69,7 +69,7 @@ namespace Day9
                             next.Update(line, visited);
                     }
                     iter++;
-                    Console.WriteLine(line+ " iter: "+ iter);
+                  
                 
 
                 
@@ -91,15 +91,21 @@ namespace Day9
         {
 
             
-            var lines = Common.ParseFile(@"input.txt");
+            var lines = Common.ParseFile(@"test2.txt");
             Console.WriteLine("Lines: "+lines.Count);
-            Knot _head = new Knot(true, 2);
+            Knot _head = new Knot(true, 10);
             
             List<Pos> visited = new List<Pos>();
-
+            int lin = 0;
             foreach (var item in lines)
             {
                 _head.Update(item, visited);
+                lin++;
+                Console.WriteLine(item+ " iter: "+ iter+ " line: "+lin);
+                if (lin == 2)
+                {
+                    Console.WriteLine(_head);
+                }
             }
 
             Console.WriteLine($"Part 1 Score: {visited.Count}\n" +

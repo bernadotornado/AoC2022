@@ -7,6 +7,7 @@ namespace Day9
 {
     class Program
     {
+        private static int iter = 0;
 
         class Knot
         {
@@ -29,14 +30,12 @@ namespace Day9
                 else
                 {
                     tail = this;
-                 //   tail.parent
                 }
             }
-            public void Update(List<string> lines, List<Pos> visited)
+            public void Update(string line, List<Pos> visited)
             {
-                foreach (var item in lines)
-                {
-                    var a = item.Split(" ");
+                
+                    var a = line.Split(" ");
                     for (int i = 0; i < int.Parse(a[1]); i++)
                     {
                         last = pos;
@@ -65,10 +64,13 @@ namespace Day9
                         {
                             visited.Add(tail.pos);
                         }
+                        
                         if (next != null )
-                            next.Update(lines, visited);
+                            next.Update(line, visited);
                     }
-                }
+                    iter++;
+                    Console.WriteLine(line+ " iter: "+ iter);
+                
 
                 
             }
@@ -88,40 +90,18 @@ namespace Day9
         static void Main(string[] args)
         {
 
+            
+            var lines = Common.ParseFile(@"input.txt");
+            Console.WriteLine("Lines: "+lines.Count);
             Knot _head = new Knot(true, 2);
             
-            
-            var lines = Common.ParseFile(@"test.txt");
-            // Pos head = new Pos(0, 0);
-            // Pos tail = new Pos(0, 0);
-            // Pos last = head;
             List<Pos> visited = new List<Pos>();
-            // foreach (var item in lines)
-            // {   var a = item.Split(" ");
-            //     for(int i = 0; i< int.Parse(a[1]); i++)
-            //     {
-            //         last = head;
-            //         switch (a[0])
-            //         {
-            //             case "R":
-            //                 head.x++; break;
-            //             case "L": 
-            //                 head.x--; break;
-            //             case "U":
-            //                 head.y++; break;
-            //             case "D":
-            //                 head.y--; break;
-            //         }
-            //
-            //         if (Math.Abs(tail.x - head.x) > 1 || Math.Abs(tail.y - head.y) > 1)
-            //             tail = last;
-            //         
-            //         if(!visited.Contains(tail))
-            //             visited.Add(tail);
-            //     }
-            //}
-            _head.Update(lines, visited);
-            
+
+            foreach (var item in lines)
+            {
+                _head.Update(item, visited);
+            }
+
             Console.WriteLine($"Part 1 Score: {visited.Count}\n" +
                               $"Part 2 Score: {0}\n");
            

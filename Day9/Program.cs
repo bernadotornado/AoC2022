@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AoC2022;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace Day9
 {
@@ -32,16 +33,15 @@ namespace Day9
                     tail = this;
                 }
             }
-            public void Update(string line, List<Pos> visited)
+            public void Update(string c, List<Pos> visited)
             {
                 
-                    var a = line.Split(" ");
-                    for (int i = 0; i < int.Parse(a[1]); i++)
-                    {
+                    
+                    
                         last = pos;
                         if (head == this)
                         {
-                            switch (a[0])
+                            switch (c)
                             {
                                 case "R":
                                     pos.x++; break;
@@ -52,22 +52,25 @@ namespace Day9
                                 case "D":
                                     pos.y--; break;
                             }
+                            next.Update(c, visited);
                         }
-                        if(parent != null)
+                        else
+                        {
                             if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
                             {
-                                
+
                                 pos = parent.last;
                             }
-
-                        if (this == tail && !visited.Contains(pos))
-                        {
-                            visited.Add(tail.pos);
+                            if (this == tail)
+                            {
+                                if (!visited.Contains(pos))
+                                {
+                                    visited.Add(tail.pos);
+                                    
+                                }
+                            }else next.Update(c, visited);
                         }
-                        
-                        if (next != null )
-                            next.Update(line, visited);
-                    }
+                    
                     iter++;
                   
                 
@@ -93,13 +96,21 @@ namespace Day9
             
             var lines = Common.ParseFile(@"test2.txt");
             Console.WriteLine("Lines: "+lines.Count);
-            Knot _head = new Knot(true, 10);
+            Knot _head = new Knot(true, 2);
             
             List<Pos> visited = new List<Pos>();
             int lin = 0;
             foreach (var item in lines)
             {
-                _head.Update(item, visited);
+                var a = item.Split(" ");
+                var op = a[0];
+                var amount = int.Parse(a[1]);
+                for (int i = 0; i < amount; i++)
+                {
+                    _head.Update(op, visited);
+                    
+                }
+                
                 lin++;
                 Console.WriteLine(item+ " iter: "+ iter+ " line: "+lin);
                 if (lin == 2)

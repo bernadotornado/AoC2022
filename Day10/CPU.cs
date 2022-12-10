@@ -19,7 +19,7 @@ namespace Day10
             public static void AddPixelToBuffer(int cycle, Sprite sprite)
             {
                 int pixelpos = (cycle % 40)-1;
-                videoBuffer.Add(sprite.SpriteIsInCycle(pixelpos)?'#':' ');
+                videoBuffer.Add(sprite.SpriteIsInCycle(pixelpos)?'█':' ');
             }
             public static void OutputVideoBuffer()
             {

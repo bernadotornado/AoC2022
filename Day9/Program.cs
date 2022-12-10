@@ -54,10 +54,6 @@ namespace Day9
                         }
                         else
                         {
-                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
-                            {
-                                pos = parent.last;
-                            }
                             if (this == tail)
                             {
                                 if (!visited.Contains(pos))
@@ -66,7 +62,12 @@ namespace Day9
                                     
                                 }
                             }
-                            else next.Update(c, visited);
+                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
+                            {
+                                pos = parent.last;
+                            }
+                           
+                            if(this != tail) next.Update(c, visited);
                         }
                     
                         // TODO: FIX THIS MESS
@@ -91,7 +92,7 @@ namespace Day9
         {
             List<Pos> SimulateRope(List<string> list, int ropeLength)
             {
-                Knot _head = new Knot(true, ropeLength);
+                Knot head = new Knot(true, ropeLength);
                 List<Pos> visited = new List<Pos>();
                 foreach (var line in list)
                 {
@@ -99,7 +100,7 @@ namespace Day9
                     var operation = arg[0];
                     var amount = int.Parse(arg[1]);
                     for (int i = 0; i < amount; i++)
-                        _head.Update(operation, visited);
+                        head.Update(operation, visited);
                 }
                 return visited;
             }

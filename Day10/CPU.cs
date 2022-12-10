@@ -13,9 +13,8 @@ namespace Day10
             public class Sprite
             {
                 private int pos;
-                public bool SpriteIsInCycle(int cycle) => (pos == cycle) || (pos == cycle - 1) || (pos == cycle + 1);
-                public void SetPos(int x) =>  pos = x;
-                public int GetPos() => pos;
+                public bool SpriteIsInCycle(int cycle) => pos == cycle || pos == cycle - 1 || pos == cycle + 1;
+                public void SetPos(int x) => pos = x;
                 public Sprite(int startPos) => pos = startPos;
             }
         }
@@ -40,10 +39,7 @@ namespace Day10
         private int cycle = 1;
         public Queue<Operation> Operations = new Queue<Operation>();
 
-        public void noop()
-        {
-            Cycle++;
-        }
+        public void noop() => Cycle++;
 
         void DrawPixel()
         {
@@ -94,7 +90,7 @@ namespace Day10
                 DrawPixel();
                 return cycle;
             }
-            set { cycle = value; }
+            set => cycle = value;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Day10
 {
@@ -15,7 +13,6 @@ namespace Day10
         {
             foreach (var s in lines)
             {
-                 
                 var a = s.Split(" ");
                 var (op, arg) = (a[0], a.Length > 1 ? int.Parse(a[1]) : 0);
                 switch (op)

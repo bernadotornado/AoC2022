@@ -20,7 +20,7 @@ namespace Day10
             Console.WriteLine("Part 1 Score: "+cpu.sumOfSignalStrengths);
             Console.WriteLine("Part 2 Output:\n");
             int index = 1;
-            foreach (var c in cpu.videoBuffer)
+            foreach (var c in CPU.iGPU.videoBuffer)
             {
                 Console.Write(c);
                 if (index % 40 == 0)

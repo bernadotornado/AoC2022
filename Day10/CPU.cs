@@ -4,26 +4,23 @@ using System.Linq;
 
 namespace Day10
 {
-    public class Sprite
-    {
-        private int pos;
-
-        public bool SpriteIsInCycle(int cycle) => (pos == cycle) || (pos == cycle - 1) || (pos == cycle + 1);
-        public void SetPos(int x)
-        {
-            pos = x;
-            Console.WriteLine($"SpritePos: {x}");
-        }
-
-        public int GetPos() => pos;
-
-        public Sprite(int startPos)
-        {
-            pos = startPos;
-        }
-    }
+    
     public class CPU
     {
+        public class iGPU
+        {
+            public static List<char> videoBuffer = new List<char>();
+            public class Sprite
+            {
+                private int pos;
+                public bool SpriteIsInCycle(int cycle) => (pos == cycle) || (pos == cycle - 1) || (pos == cycle + 1);
+                public void SetPos(int x) =>  pos = x;
+                public int GetPos() => pos;
+                public Sprite(int startPos) => pos = startPos;
+            }
+        }
+        
+        
         public struct Operation
         {
             public string op;
@@ -36,47 +33,29 @@ namespace Day10
             }
         }
 
-        public List<Char> videoBuffer = new List<char>();
-        private Sprite sprite = new Sprite(1);
+        private iGPU.Sprite sprite = new iGPU.Sprite(1);
         public int x = 1;
         int[] signalStrengths = { 20, 60, 100, 140, 180, 220 };
         public int sumOfSignalStrengths = 0;
-        private int cycle =1;
+        private int cycle = 1;
         public Queue<Operation> Operations = new Queue<Operation>();
 
-        public void NoOp()
+        public void noop()
         {
-            //Console.WriteLine("Begin noop");
-            DrawPixel();
             Cycle++;
-            //Console.WriteLine("End noop");
         }
 
         void DrawPixel()
         {
-            char c;
-            int temp = cycle % 40;
-            if (sprite.SpriteIsInCycle(temp -1))
-            {
-                c = '#';
-            }
-            else
-            {
-                c='.';
-            }
-            Console.WriteLine($"Cycle: {cycle} Drawing Pixel in Pos: {videoBuffer.Count}; Pixel: {c}, SpritePos:{sprite.GetPos()}, temp: {temp}");
-            videoBuffer.Add(c);
+            int pixelpos = (cycle % 40)-1;
+            iGPU.videoBuffer.Add(sprite.SpriteIsInCycle(pixelpos)?'#':' ');
         }
-        public void AddX(int arg)
+        public void addx(int arg)
         {
-            Console.WriteLine($"Cycle: {cycle} Begin executing addx {arg}");
-            DrawPixel();
             Cycle++;
-            DrawPixel();
             Cycle++;
             x+= arg;
             sprite.SetPos(x);
-            Console.WriteLine($"Cycle: {cycle} End addx {arg}. x: {x}");
         }
 
         public void ReadInstructions(List<string> lines)
@@ -97,10 +76,10 @@ namespace Day10
                 switch (op.op)
                 {
                     case "noop" :
-                        NoOp();
+                        noop();
                         break;
                     case "addx":
-                        AddX(op.arg);
+                        addx(op.arg);
                         break;
                 }
                 
@@ -110,20 +89,12 @@ namespace Day10
         {
             get
             {
-               // Console.WriteLine("Cycle: "+cycle);
                 if (signalStrengths.Contains(cycle))
-                {
                     sumOfSignalStrengths += cycle * x;
-                }
-
-               
-                
+                DrawPixel();
                 return cycle;
             }
-            set
-            {
-                cycle = value;
-            }
+            set { cycle = value; }
         }
     }
 }

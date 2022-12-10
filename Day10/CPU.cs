@@ -4,12 +4,10 @@ using System.Linq;
 
 namespace Day10
 {
-    
     public class CPU
     {
         public class iGPU
         {
-            public static List<char> videoBuffer = new List<char>();
             public class Sprite
             {
                 private int pos;
@@ -17,14 +15,32 @@ namespace Day10
                 public void SetPos(int x) => pos = x;
                 public Sprite(int startPos) => pos = startPos;
             }
+            public static List<char> videoBuffer = new List<char>();
+            public static void AddPixelToBuffer(int cycle, Sprite sprite)
+            {
+                int pixelpos = (cycle % 40)-1;
+                videoBuffer.Add(sprite.SpriteIsInCycle(pixelpos)?'#':' ');
+            }
+            public static void OutputVideoBuffer()
+            {
+                int index = 1;
+                foreach (var c in videoBuffer)
+                {
+                    Console.Write(c);
+                    if (index % 40 == 0)
+                    {
+                        Console.WriteLine();
+                        index = 0;
+                    }
+                    index++;
+                }
+            }
         }
-        
         
         public struct Operation
         {
             public string op;
             public int arg;
-
             public Operation(string op, int arg)
             {
                 this.arg = arg;
@@ -40,12 +56,6 @@ namespace Day10
         public Queue<Operation> Operations = new Queue<Operation>();
 
         public void noop() => Cycle++;
-
-        void DrawPixel()
-        {
-            int pixelpos = (cycle % 40)-1;
-            iGPU.videoBuffer.Add(sprite.SpriteIsInCycle(pixelpos)?'#':' ');
-        }
         public void addx(int arg)
         {
             Cycle++;
@@ -53,7 +63,6 @@ namespace Day10
             x+= arg;
             sprite.SetPos(x);
         }
-
         public void ReadInstructions(List<string> lines)
         {
             foreach (var s in lines)
@@ -62,7 +71,6 @@ namespace Day10
                 Operation op = new Operation(a[0], a.Length>1 ? int.Parse(a[1]):0);
                 Operations.Enqueue(op);
             }
-          
         }
         public void RunInstructions()
         {
@@ -78,7 +86,6 @@ namespace Day10
                         addx(op.arg);
                         break;
                 }
-                
             }
         }
         public int Cycle
@@ -87,7 +94,7 @@ namespace Day10
             {
                 if (signalStrengths.Contains(cycle))
                     sumOfSignalStrengths += cycle * x;
-                DrawPixel();
+                iGPU.AddPixelToBuffer(cycle, sprite);
                 return cycle;
             }
             set => cycle = value;

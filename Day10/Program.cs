@@ -13,24 +13,13 @@ namespace Day10
         static void Main(string[] args)
         {
             var lines = Common.ParseFile(@"input.txt");
-
             var cpu = new CPU();
             cpu.ReadInstructions(lines);
             cpu.RunInstructions();
-            Console.WriteLine("Part 1 Score: "+cpu.sumOfSignalStrengths);
-            Console.WriteLine("Part 2 Output:\n");
-            int index = 1;
-            foreach (var c in CPU.iGPU.videoBuffer)
-            {
-                Console.Write(c);
-                if (index % 40 == 0)
-                {
-                    Console.WriteLine();
-                    index = 0;
-                }
-                index++;
-            }
-            //Console.WriteLine(cpu.sumOfSignalStrengths);
+            Console.WriteLine($"Part 1 Score: {cpu.sumOfSignalStrengths}\n"+
+                               "Part 2 Output:");
+            CPU.iGPU.OutputVideoBuffer();
+           
         }
     }
 }

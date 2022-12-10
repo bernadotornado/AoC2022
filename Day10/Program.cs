@@ -8,8 +8,7 @@ namespace Day10
         static void Main(string[] args)
         {
             var lines = Common.ParseFile(@"input.txt");
-            CPU.ReadInstructions(lines);
-            CPU.RunInstructions();
+            CPU.RunInstructions(lines);
             Console.WriteLine($"Part 1 Score: {CPU.sumOfSignalStrengths}\n"+
                                "Part 2 Output:");
             GPU.OutputVideoBuffer();

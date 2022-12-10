@@ -11,19 +11,13 @@ namespace Day10
         private static int cycle = 1;
         private static Queue<(string, int)> operations = new Queue<(string, int)>();
         
-        public static void ReadInstructions(List<string> lines)
+        public static void RunInstructions(List<string> lines)
         {
             foreach (var s in lines)
             {
+                 
                 var a = s.Split(" ");
-                operations.Enqueue((a[0], a.Length>1 ? int.Parse(a[1]):0));
-            }
-        }
-        public static void RunInstructions()
-        {
-            while (operations.Count > 0)
-            {
-                var (op, arg) = operations.Dequeue();
+                var (op, arg) = (a[0], a.Length > 1 ? int.Parse(a[1]) : 0);
                 switch (op)
                 {
                     case "noop" :

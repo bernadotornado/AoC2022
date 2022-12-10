@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
 using AoC2022;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace Day9
 {
@@ -23,61 +23,59 @@ namespace Day9
             {
                 if (isHead)
                     head = this;
-                if (length > 1)
+                if(!(length> 1))
+                    tail = this;
+                else
                 {
                     next = new Knot(false, length - 1);
                     next.parent = this;
                 }
-                else
-                {
-                    tail = this;
-                }
             }
-            public void Update(string line, List<Pos> visited)
-            {   
+            public void Update(string c, List<Pos> visited)
+            {
                 
-                var a = line.Split(" ");
-                
-                for (int i = 0; i < int.Parse(a[1]); i++)
-                {
-                    iter++;
-                    last = pos;
-                    if (this == head)
-                    {
-                        switch (a[0])
-                        {
-                            case "R":
-                                pos.x++; break;
-                            case "L": 
-                                pos.x--; break;
-                            case "U":
-                                pos.y++; break;
-                            case "D":
-                                pos.y--; break;
-                        }
-                        next.Update(line,visited);
-                    }
-
-                    else if (this == tail)
-                    {
-                        if (!visited.Contains(pos))
-                        {
-                            visited.Add(pos);
-                        }
-                      //  break;
-                        
-                    }
-                    else
-                    {
-                        if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
-                        {
-                            pos = parent.last;
-                        }
-                      // next.Update(line,visited);
-                    }
                     
-                }
+                    
+                        last = pos;
+                        if (head == this)
+                        {
+                            switch (c)
+                            {
+                                case "R":
+                                    pos.x++; break;
+                                case "L": 
+                                    pos.x--; break;
+                                case "U":
+                                    pos.y++; break;
+                                case "D":
+                                    pos.y--; break;
+                            }
+                            next.Update(c, visited);
+                        }
+                        else
+                        {
+                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
+                            {
+                                pos = parent.last;
+                            }
+                            if (this == tail)
+                            {
+                                if (!visited.Contains(pos))
+                                {
+                                    visited.Add(tail.pos);
+                                    
+                                }
+                            }
+                            else next.Update(c, visited);
+                        }
+                    
+                        // TODO: FIX THIS MESS
+                
+
+                
             }
+            
+            
         }
         struct Pos
         {
@@ -91,27 +89,23 @@ namespace Day9
         }
         static void Main(string[] args)
         {
-
-            
-            var lines = Common.ParseFile(@"input.txt");
-            Console.WriteLine("Lines: "+lines.Count);
-            Knot _head = new Knot(true, 2);
-            
-            List<Pos> visited = new List<Pos>();
-            int lin = 0;
-            foreach (var item in lines)
+            List<Pos> SimulateRope(List<string> list, int ropeLength)
             {
-                _head.Update(item, visited);
-                lin++;
-                Console.WriteLine(item+ " iter: "+ iter+ " line: "+lin);
-                if (lin == 2)
+                Knot _head = new Knot(true, ropeLength);
+                List<Pos> visited = new List<Pos>();
+                foreach (var line in list)
                 {
-                    Console.WriteLine(_head);
+                    var arg = line.Split(" ");
+                    var operation = arg[0];
+                    var amount = int.Parse(arg[1]);
+                    for (int i = 0; i < amount; i++)
+                        _head.Update(operation, visited);
                 }
+                return visited;
             }
-
-            Console.WriteLine($"Part 1 Score: {visited.Count}\n" +
-                              $"Part 2 Score: {0}\n");
+            var lines = Common.ParseFile(@"input.txt");
+            Console.WriteLine($"Part 1 Score: {SimulateRope(lines, 2).Count}\n" +
+                              $"Part 2 Score: {SimulateRope(lines, 10).Count}\n");
            
         }
     }

@@ -23,14 +23,12 @@ namespace Day9
             {
                 if (isHead)
                     head = this;
-                if (length > 1)
+                if(!(length> 1))
+                    tail = this;
+                else
                 {
                     next = new Knot(false, length - 1);
                     next.parent = this;
-                }
-                else
-                {
-                    tail = this;
                 }
             }
             public void Update(string c, List<Pos> visited)
@@ -58,7 +56,6 @@ namespace Day9
                         {
                             if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
                             {
-
                                 pos = parent.last;
                             }
                             if (this == tail)
@@ -68,11 +65,11 @@ namespace Day9
                                     visited.Add(tail.pos);
                                     
                                 }
-                            }else next.Update(c, visited);
+                            }
+                            else next.Update(c, visited);
                         }
                     
-                    iter++;
-                  
+                        // TODO: FIX THIS MESS
                 
 
                 
@@ -92,35 +89,23 @@ namespace Day9
         }
         static void Main(string[] args)
         {
-
-            
-            var lines = Common.ParseFile(@"test2.txt");
-            Console.WriteLine("Lines: "+lines.Count);
-            Knot _head = new Knot(true, 2);
-            
-            List<Pos> visited = new List<Pos>();
-            int lin = 0;
-            foreach (var item in lines)
+            List<Pos> SimulateRope(List<string> list, int ropeLength)
             {
-                var a = item.Split(" ");
-                var op = a[0];
-                var amount = int.Parse(a[1]);
-                for (int i = 0; i < amount; i++)
+                Knot _head = new Knot(true, ropeLength);
+                List<Pos> visited = new List<Pos>();
+                foreach (var line in list)
                 {
-                    _head.Update(op, visited);
-                    
+                    var arg = line.Split(" ");
+                    var operation = arg[0];
+                    var amount = int.Parse(arg[1]);
+                    for (int i = 0; i < amount; i++)
+                        _head.Update(operation, visited);
                 }
-                
-                lin++;
-                Console.WriteLine(item+ " iter: "+ iter+ " line: "+lin);
-                if (lin == 2)
-                {
-                    Console.WriteLine(_head);
-                }
+                return visited;
             }
-
-            Console.WriteLine($"Part 1 Score: {visited.Count}\n" +
-                              $"Part 2 Score: {0}\n");
+            var lines = Common.ParseFile(@"input.txt");
+            Console.WriteLine($"Part 1 Score: {SimulateRope(lines, 2).Count}\n" +
+                              $"Part 2 Score: {SimulateRope(lines, 10).Count}\n");
            
         }
     }

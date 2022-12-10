@@ -54,6 +54,11 @@ namespace Day9
                         }
                         else
                         {
+                            
+                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
+                            {
+                                pos = parent.last;
+                            }
                             if (this == tail)
                             {
                                 if (!visited.Contains(pos))
@@ -61,10 +66,6 @@ namespace Day9
                                     visited.Add(tail.pos);
                                     
                                 }
-                            }
-                            if (Math.Abs(parent.pos.x - pos.x) > 1 || Math.Abs(parent.pos.y - pos.y) > 1)
-                            {
-                                pos = parent.last;
                             }
                            
                             if(this != tail) next.Update(c, visited);
@@ -104,7 +105,7 @@ namespace Day9
                 }
                 return visited;
             }
-            var lines = Common.ParseFile(@"input.txt");
+            var lines = Common.ParseFile(@"test.txt");
             Console.WriteLine($"Part 1 Score: {SimulateRope(lines, 2).Count}\n" +
                               $"Part 2 Score: {SimulateRope(lines, 10).Count}\n");
            

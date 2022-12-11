@@ -15,11 +15,11 @@ namespace Day11
         private int ifFalseMonkeyID;
         private string operation;
         public int inspectedItems;
-        public static Dictionary<int, Monkey> monkeyRegister= new Dictionary<int, Monkey>();
+        public static List<Monkey> monkeyRegister= new List<Monkey>();
         public Monkey(List<string> definition)
         {
             id = int.Parse(definition[0].Split(" ")[1][0].ToString());
-            monkeyRegister.Add(id, this);
+            monkeyRegister.Add(this);
             var a = definition[1].Split("items: ");
             var b = a[1].Replace(",", "");
             var c = b.Split(" ");

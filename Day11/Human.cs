@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Collections.Generic;
 using AoC2022;
 
@@ -8,7 +9,7 @@ namespace Day11
     class Monkey
     {
         private int id;
-        private List<int> startingItems = new List<int>();
+        public Queue<BigInteger> startingItems = new Queue<BigInteger>();
         public int testDivisibility;
         private int ifTrueMonkeyID;
         private int ifFalseMonkeyID;
@@ -23,7 +24,7 @@ namespace Day11
             var b = a[1].Replace(",", "");
             var c = b.Split(" ");
              foreach (var d in c)
-                startingItems.Add(int.Parse( d.Trim()));
+                startingItems.Enqueue(int.Parse( d.Trim()));
             testDivisibility = int.Parse(definition[3].Split("by ")[1].Trim());
             ifTrueMonkeyID = int.Parse(definition[4].Split("monkey ")[1].Trim());
             ifFalseMonkeyID = int.Parse(definition[5].Split("monkey ")[1].Trim());
@@ -32,15 +33,15 @@ namespace Day11
 
         public static Monkey GetMonkeyByID(int id)=> monkeyRegister[id];
 
-        public void RunOperation(ref int worryLevel)
+        public void RunOperation(ref BigInteger worryLevel)
         {
-            int firstParam = worryLevel;
-            int secondParam;
+            BigInteger firstParam = worryLevel;
+            BigInteger secondParam;
             var args = operation.Split(" ");
             if (args[2] == "old")
                 secondParam = worryLevel;
             else
-                secondParam = int.Parse(args[2].Trim());
+                secondParam = BigInteger.Parse(args[2]);
 
             switch (args[1])
             {
@@ -53,14 +54,13 @@ namespace Day11
         public void InspectItems()
         {
             int a = startingItems.Count;
-            for (int i = 0; i < a; i++)
+            while (startingItems.Count>0)
             {
-                var item = startingItems[i < startingItems.Count ? i: startingItems.Count-1];
-                var temp = item;
+                BigInteger item = startingItems.Dequeue();
                 RunOperation(ref item);
                 inspectedItems++;
                 item /= 3;
-                ThrowItem(temp);
+                
                 if (item % testDivisibility == 0)
                     GetMonkeyByID(ifTrueMonkeyID).RecieveItem(item);
                 else
@@ -68,14 +68,7 @@ namespace Day11
             }
         }
 
-        public void ThrowItem(int item)
-        {
-            startingItems.Remove(item);
-        }
-        public void RecieveItem(int item)
-        {
-            startingItems.Add(item);
-        }
+        public void RecieveItem(BigInteger item) => startingItems.Enqueue(item);
         public override string ToString()
         {
             string s = $"Monkey {id}:\n" +
@@ -84,6 +77,7 @@ namespace Day11
                 s += $"{item}, ";
             s += $"\n\tOperation: new = {operation}" +
                  $"\n\tTest: divisible by {testDivisibility}" +
+                 $"\n\tInspected: {inspectedItems}" +
                  $"\n\t\tIf true: throw to monkey {ifTrueMonkeyID}" +
                  $"\n\t\tIf false: throw to monkey {ifFalseMonkeyID}";
             return s; 
@@ -97,7 +91,7 @@ namespace Day11
         public static int worryLevel;
         static void Main(string[] args)
         {
-            var lines = Common.ParseFile("test.txt");
+            var lines = Common.ParseFile("input.txt");
             var current = new List<string>();
             foreach (var line in lines)
             {
@@ -106,30 +100,51 @@ namespace Day11
                 else
                 {
                     var m = new Monkey(current);
-                //    Console.WriteLine(m);
-                    current = new List<string>();
+                    current.Clear();
                 }
             }
 
-            // Console.WriteLine(Monkey.monkeyRegister);
-            for (int j = 0; j < 20; j++)
+            if (current.Count > 0)
+            {
+                var m = new Monkey(current);
+            }
+            DebugRounds();
+            for (int round = 0; round < 20; round++)
             {
                 for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
                 {
                     Monkey m = Monkey.GetMonkeyByID(i);
                     m.InspectItems();
-                    // Console.WriteLine(m);
                 }
+                Console.WriteLine($"\nAfter round {round+1}, the monkeys are holding items with these worry levels:");
+
+                DebugRounds();
+                
+              Console.WriteLine("");
             }
 
-           // List<int> thrown = new List<int>();
+             List<int> activeMonkeys = new List<int>();
              for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
              {
-                // thrown.Add(Monkey.GetMonkeyByID(i).inspectedItems);
-                Console.WriteLine(Monkey.GetMonkeyByID(i));
+                activeMonkeys.Add(Monkey.GetMonkeyByID(i).inspectedItems);
              }
+             activeMonkeys.Sort();
+             Console.WriteLine("Part 1 Score: "+activeMonkeys[activeMonkeys.Count-1]*activeMonkeys[activeMonkeys.Count-2]);
+        }
 
-            // Console.WriteLine(thrown[thrown.Count-1]*thrown[thrown.Count-2]);
+        private static void DebugRounds()
+        {
+            for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
+            {
+                Monkey m = Monkey.GetMonkeyByID(i);
+                Console.Write($"Monkey {i}: ");
+                foreach (var df in m.startingItems)
+                {
+                    Console.Write($"{df}, ");
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }

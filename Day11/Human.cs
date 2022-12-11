@@ -30,31 +30,52 @@ namespace Day11
             operation = definition[2].Split("= ")[1];
         }
 
-        public Monkey GetMonkeyByID(int id)=> monkeyRegister[id];
+        public static Monkey GetMonkeyByID(int id)=> monkeyRegister[id];
 
-        public void RunOperation()
+        public void RunOperation(ref int worryLevel)
         {
-            int firstParam = Human.worryLevel;
+            int firstParam = worryLevel;
             int secondParam;
             var args = operation.Split(" ");
             if (args[2] == "old")
-                secondParam = Human.worryLevel;
+                secondParam = worryLevel;
             else
                 secondParam = int.Parse(args[2].Trim());
 
             switch (args[1])
             {
-                case "*": Human.worryLevel = firstParam * secondParam; break;
-                case "+": Human.worryLevel = firstParam + secondParam; break;
+                case "*": worryLevel = firstParam * secondParam; break;
+                case "+": worryLevel = firstParam + secondParam; break;
             }
 
         }
 
         public void InspectItems()
         {
-            
+            int a = startingItems.Count;
+            for (int i = 0; i < a; i++)
+            {
+                var item = startingItems[i < startingItems.Count ? i: startingItems.Count-1];
+                var temp = item;
+                RunOperation(ref item);
+                inspectedItems++;
+                item /= 3;
+                ThrowItem(temp);
+                if (item % testDivisibility == 0)
+                    GetMonkeyByID(ifTrueMonkeyID).RecieveItem(item);
+                else
+                    GetMonkeyByID(ifFalseMonkeyID).RecieveItem(item);
+            }
         }
-        
+
+        public void ThrowItem(int item)
+        {
+            startingItems.Remove(item);
+        }
+        public void RecieveItem(int item)
+        {
+            startingItems.Add(item);
+        }
         public override string ToString()
         {
             string s = $"Monkey {id}:\n" +
@@ -76,21 +97,39 @@ namespace Day11
         public static int worryLevel;
         static void Main(string[] args)
         {
-            var lines = Common.ParseFile("input.txt");
+            var lines = Common.ParseFile("test.txt");
             var current = new List<string>();
             foreach (var line in lines)
             {
                 if (line != "")
-                {
                     current.Add(line);
-                }
                 else
                 {
                     var m = new Monkey(current);
-                    Console.WriteLine(m);
+                //    Console.WriteLine(m);
                     current = new List<string>();
                 }
             }
+
+            // Console.WriteLine(Monkey.monkeyRegister);
+            for (int j = 0; j < 20; j++)
+            {
+                for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
+                {
+                    Monkey m = Monkey.GetMonkeyByID(i);
+                    m.InspectItems();
+                    // Console.WriteLine(m);
+                }
+            }
+
+           // List<int> thrown = new List<int>();
+             for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
+             {
+                // thrown.Add(Monkey.GetMonkeyByID(i).inspectedItems);
+                Console.WriteLine(Monkey.GetMonkeyByID(i));
+             }
+
+            // Console.WriteLine(thrown[thrown.Count-1]*thrown[thrown.Count-2]);
         }
     }
 }

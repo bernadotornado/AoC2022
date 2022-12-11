@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Collections.Generic;
+using System.Linq;
 using AoC2022;
 
 namespace Day11
@@ -11,10 +12,11 @@ namespace Day11
         private int id;
         public Queue<BigInteger> startingItems = new Queue<BigInteger>();
         public int testDivisibility;
+        public static int commonDivisor = 1;
         private int ifTrueMonkeyID;
         private int ifFalseMonkeyID;
         private string operation;
-        public int inspectedItems;
+        public BigInteger inspectedItems;
         public static List<Monkey> monkeyRegister= new List<Monkey>();
         public Monkey(List<string> definition)
         {
@@ -26,6 +28,7 @@ namespace Day11
              foreach (var d in c)
                 startingItems.Enqueue(int.Parse( d.Trim()));
             testDivisibility = int.Parse(definition[3].Split("by ")[1].Trim());
+            commonDivisor *= testDivisibility;
             ifTrueMonkeyID = int.Parse(definition[4].Split("monkey ")[1].Trim());
             ifFalseMonkeyID = int.Parse(definition[5].Split("monkey ")[1].Trim());
             operation = definition[2].Split("= ")[1];
@@ -59,8 +62,8 @@ namespace Day11
                 BigInteger item = startingItems.Dequeue();
                 RunOperation(ref item);
                 inspectedItems++;
-                item /= 3;
-                
+           //     item /= 3;
+                item %= Monkey.commonDivisor;
                 if (item % testDivisibility == 0)
                     GetMonkeyByID(ifTrueMonkeyID).RecieveItem(item);
                 else
@@ -86,9 +89,8 @@ namespace Day11
     
     
     
-    class Human
+    class Program
     {
-        public static int worryLevel;
         static void Main(string[] args)
         {
             var lines = Common.ParseFile("input.txt");
@@ -109,7 +111,7 @@ namespace Day11
                 var m = new Monkey(current);
             }
             DebugRounds();
-            for (int round = 0; round < 20; round++)
+            for (int round = 0; round < 10000; round++)
             {
                 for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
                 {
@@ -123,7 +125,7 @@ namespace Day11
               Console.WriteLine("");
             }
 
-             List<int> activeMonkeys = new List<int>();
+             List<BigInteger> activeMonkeys = new List<BigInteger>();
              for (int i = 0; i < Monkey.monkeyRegister.Count; i++)
              {
                 activeMonkeys.Add(Monkey.GetMonkeyByID(i).inspectedItems);

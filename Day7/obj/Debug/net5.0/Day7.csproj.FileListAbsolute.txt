@@ -43,3 +43,4 @@ C:\Users\bszha\Spengergasse\AoC2022\AoC2022\Day7\obj\Debug\net5.0\Day7.dll
 C:\Users\bszha\Spengergasse\AoC2022\AoC2022\Day7\obj\Debug\net5.0\ref\Day7.dll
 C:\Users\bszha\Spengergasse\AoC2022\AoC2022\Day7\obj\Debug\net5.0\Day7.pdb
 C:\Users\bszha\Spengergasse\AoC2022\AoC2022\Day7\obj\Debug\net5.0\Day7.genruntimeconfig.cache
+B:\Backup\SideProjects\AoC2022\AoC2022\Day7\obj\Debug\net5.0\Day7.csproj.CopyComplete

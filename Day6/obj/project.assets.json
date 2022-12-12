@@ -27,19 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bszha\\.nuget\\packages\\": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day6\\Day6.csproj",
+      "projectUniqueName": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day6\\Day6.csproj",
       "projectName": "Day6",
-      "projectPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day6\\Day6.csproj",
-      "packagesPath": "C:\\Users\\bszha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day6\\obj\\",
+      "projectPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day6\\Day6.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day6\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\bszha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -53,8 +53,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
-              "projectPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj"
+            "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
+              "projectPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj"
             }
           }
         }
@@ -78,30 +78,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.17, 5.0.17]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

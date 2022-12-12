@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day9\\Day9.csproj": {}
+    "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day9\\Day9.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
+    "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj",
+        "projectUniqueName": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj",
         "projectName": "AoC2022",
-        "projectPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj",
-        "packagesPath": "C:\\Users\\bszha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\obj\\",
+        "projectPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bszha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,21 +54,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day9\\Day9.csproj": {
+    "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day9\\Day9.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day9\\Day9.csproj",
+        "projectUniqueName": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day9\\Day9.csproj",
         "projectName": "Day9",
-        "projectPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day9\\Day9.csproj",
-        "packagesPath": "C:\\Users\\bszha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day9\\obj\\",
+        "projectPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day9\\Day9.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day9\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bszha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
-                "projectPath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj"
+              "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj": {
+                "projectPath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\AoC2022\\AoC2022.csproj"
               }
             }
           }
@@ -112,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

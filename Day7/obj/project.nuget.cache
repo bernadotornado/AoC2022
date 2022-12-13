@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MNSiaskDnoPwVRHCzx1mDKPyFlQeJGCOEb4SNOFS1JKVY5Yptm/ktkGDh9npB2C4yhuPL9Yo28rLUpdUcIkhlQ==",
+  "dgSpecHash": "gSzoHgmwvTqJT61TjcBx1TLTzG2dGT9M7VVCiCBsMrJe8A6GHZN/FHW9D/xP0Gm0+AURfZOcs66E9Jy4b54E9Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bszha\\Spengergasse\\AoC2022\\AoC2022\\Day7\\Day7.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\bszha\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
-    "C:\\Users\\bszha\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
-    "C:\\Users\\bszha\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
-    "C:\\Users\\bszha\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
-  ],
+  "projectFilePath": "B:\\Backup\\SideProjects\\AoC2022\\AoC2022\\Day7\\Day7.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

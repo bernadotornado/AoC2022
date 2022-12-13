@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
@@ -80,6 +81,10 @@ namespace Day12
                     {
                         return false;
                     }
+                    else
+                    {
+                        
+                   
                     var current = yetToSearch.First();
                     var neighbours = current.GetNeighbours();
                     foreach (var n in neighbours)
@@ -88,6 +93,7 @@ namespace Day12
                             yetToSearch.Enqueue(n);
                         }
                     searched.Enqueue(yetToSearch.Dequeue());
+                    }
                 }
 
                 return true;
@@ -116,61 +122,46 @@ namespace Day12
                 foundPath = true;
                 return path;
             }
-
-            public static void Reset()
-            {
-                yetToSearch = new Queue<Tile>();
-                searched = new Queue<Tile>();
-                path = new List<Tile>();
-                var (x, y) = (end.x, end.y);
-               // end.prev = null;
-                //   end = new Tile(x, y, EvaluateChar('z'), false, true);
-            }
         }
 
 
         static void Main(string[] args)
         {
+            InitMap(Tile.start);
+            bool hasArg = args.Length > 0;
+            var (x, y) = (Tile.start.x, hasArg ?int.Parse(args[0]):Tile.start.y);
+            Tile.Search(Tile.map[x,y], Tile.end);
+            Console.WriteLine($"Part {(hasArg? 2 : 1)} Score: {Tile.FindPath(out bool b).Count}");
+            if (args.Length == 0)
+                for (int i = 0; i < Tile.map.GetLength(1); i++)
+                {
+                    var p = new Process();
+                    p.StartInfo.FileName= "Day12.exe";
+                    p.StartInfo.Arguments = $"{i}";
+                    p.Start();
+                }
+                
+        }
+
+        private static void InitMap(Tile start)
+        {
             var lines = Common.ParseFile("input.txt");
-            
+
             int width = lines[0].Length;
             int height = lines.Count;
             var map = new Tile[width, height];
-            
-            for (int y = 0; y < height; y++)
-                for (int x = 0; x < width; x++)
-                    map[x, y] = lines[y][x] switch
-                    {
-                        'S' => new Tile(x,y, EvaluateChar('a'), true,false),
-                        'E' => new Tile(x,y, EvaluateChar('z'), false,true),
-                         _  => new Tile(x,y, EvaluateChar(lines[y][x]), false,false),
-                        
-                    };
-            
-            Tile.map = map;
-            Tile.Search(Tile.start, Tile.end);
-            Console.WriteLine($"Part 1 Score: {Tile.FindPath(out bool b).Count}");
-            // List<int> paths = new List<int>();
-            // foreach (var st in Tile.lowestElevation)
-            // {
-            //     Tile.Reset();
-            //     
-            //     var (x, y) = (Tile.end.x, Tile.end.y);
-            //     if (Tile.Search(st, Tile.end))
-            //     {
-            //         
-            //         var c = Tile.FindPath(out bool foundPath).Count;
-            //         if (foundPath)
-            //         {
-            //             
-            //             Console.WriteLine(c);
-            //             paths.Add(c);
-            //         }
-            //     }
-            // }
-            // paths.Sort();
-            // Console.WriteLine($"Part 2 Score: {paths.FirstOrDefault()}");
 
+            for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                map[x, y] = lines[y][x] switch
+                {
+                    'S' => new Tile(x, y, EvaluateChar('a'), true, false),
+                    'E' => new Tile(x, y, EvaluateChar('z'), false, true),
+                    _ => new Tile(x, y, EvaluateChar(lines[y][x]), false, false),
+                };
+
+            Tile.map = map;
+           
         }
     }
 }

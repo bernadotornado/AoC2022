@@ -2,7 +2,6 @@
 using  AoC2022;
 using  System.Linq;
 
-
 namespace Day12
 {
     public class Tile
@@ -81,9 +80,7 @@ namespace Day12
                     }
                 searched.Enqueue(yetToSearch.Dequeue());
             }
-
             return true;
-
         }
 
         public static List<Tile> FindPath()

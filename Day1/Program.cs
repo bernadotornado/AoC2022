@@ -21,12 +21,8 @@ namespace Day1
                 currentNum += Convert.ToInt32(item);
             }
             sums.Sort();
-            Console.WriteLine($"most calories: {sums[sums.Count-1]}\n" +
-                $"Top 3:\n" +
-                $"{sums[sums.Count - 1]}\n" +
-                $"{sums[sums.Count - 2]}\n" +
-                $"{sums[sums.Count - 3]}\n" +
-                $"Total: {sums[sums.Count - 1]+ sums[sums.Count - 2]+ sums[sums.Count - 3]}");
+            Console.WriteLine($"Part 1 Score: {sums[sums.Count-1]}\n" +
+                                $"Part 2 Score: {sums[sums.Count - 1]+ sums[sums.Count - 2]+ sums[sums.Count - 3]}");
         }
     }
 }

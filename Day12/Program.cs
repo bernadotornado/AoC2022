@@ -13,6 +13,8 @@ namespace Day12
             var (x, y) = (Tile.start.x, hasArg ?int.Parse(args[0]):Tile.start.y);
             Tile.Search(Tile.map[x,y], Tile.end);
             Console.WriteLine($"{(!hasArg? "Part 1 Score: ":"")}{Tile.FindPath().Count}");
+            
+            // not proud of this...
             if (args.Length == 0)
             {
                 var a = new List<int>();

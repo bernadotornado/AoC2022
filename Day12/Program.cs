@@ -148,30 +148,28 @@ namespace Day12
                     };
             
             Tile.map = map;
-            Tile.Reset();
-            var a = 0;
             Tile.Search(Tile.start, Tile.end);
             Console.WriteLine($"Part 1 Score: {Tile.FindPath(out bool b).Count}");
-            List<int> paths = new List<int>();
-            foreach (var st in Tile.lowestElevation)
-            {
-                Tile.Reset();
-                
-                var (x, y) = (Tile.end.x, Tile.end.y);
-                if (Tile.Search(st, Tile.end))
-                {
-                    
-                    var c = Tile.FindPath(out bool foundPath).Count;
-                    if (foundPath)
-                    {
-                        
-                        Console.WriteLine(c);
-                        paths.Add(c);
-                    }
-                }
-            }
-            paths.Sort();
-            Console.WriteLine($"Part 2 Score: {paths.FirstOrDefault()}");
+            // List<int> paths = new List<int>();
+            // foreach (var st in Tile.lowestElevation)
+            // {
+            //     Tile.Reset();
+            //     
+            //     var (x, y) = (Tile.end.x, Tile.end.y);
+            //     if (Tile.Search(st, Tile.end))
+            //     {
+            //         
+            //         var c = Tile.FindPath(out bool foundPath).Count;
+            //         if (foundPath)
+            //         {
+            //             
+            //             Console.WriteLine(c);
+            //             paths.Add(c);
+            //         }
+            //     }
+            // }
+            // paths.Sort();
+            // Console.WriteLine($"Part 2 Score: {paths.FirstOrDefault()}");
 
         }
     }
